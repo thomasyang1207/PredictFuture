@@ -1,2 +1,3 @@
 # PredictFuture
-Help college students predict future corporal ranking
+
+Predict Economic status of countries based on geographical data
