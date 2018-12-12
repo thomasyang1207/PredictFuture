@@ -45,7 +45,14 @@ def runModel(data, target):
 	targetMedian = st.median([val[target] for val in targetData])
 
 	for ex in targetData:
-		ex[target] = 'greater' if ex[target] > targetMedian else 'lesser'
+		ex[target] = 'upperHalf' if ex[target] > targetMedian else 'lowerHalf'
+
+	with open('discretized.csv', 'w', newline = '') as csvfile:
+		fieldnames = [k for k in targetData[0].keys()]
+		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+		writer.writeheader()
+		for ex in targetData:
+			writer.writerow(ex)
 
 	print("median value for target:", target, ': ', targetMedian)
 
