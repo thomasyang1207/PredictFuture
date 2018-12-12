@@ -29,6 +29,7 @@ class ID3Augmented:
 			acc.append(self.test(self.root, self.target, test)) 
 			#print(self.root)
 		print('\n')
+		print(self.root)
 		print('Test accuracy = ', str(sum(acc) / len(acc)))
 			#print('most determininstic attribute ended up being', self.root.attribute)
 		return sum(acc) / len(acc)

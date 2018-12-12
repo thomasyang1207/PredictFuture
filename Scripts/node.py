@@ -24,6 +24,8 @@ class Node:
 			myString += "Child with value: " + str(key) + "\n"
 			myString += val.__str__()
 
+
+		myString += '\n End Node with attribute: ' + str(self.attribute) + '\n'
 		return myString
 
 

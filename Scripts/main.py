@@ -1,6 +1,7 @@
 import parse, math, processData
 import statistics as st
 import ID3Augmented as ID3
+import csv
 
 def runModel(data, target):
 	processData.processData(data)
@@ -17,7 +18,7 @@ def runModel(data, target):
 	'Net migration', 'Infant mortality per  births', 'GDP  per capita', 'Literacy ', 
 	'Arable ', 'Crops ', 'Other ', 'Climate', 'Birthrate', 'Deathrate', 'Agriculture', 'Industry', 'Service', 'CoastlineLength'],
 
-	['Precipitation','Climate', 'Population', 'Area sq mi', 'Pop Density per sq mi', 'CoastlineLength'],
+	['Precipitation', 'Climate', 'Arable ', 'Population', 'Area sq mi', 'Pop Density per sq mi', 'CoastlineLength'],
 
 	['Climate'], ['Area sq mi'], ['Pop Density per sq mi'], ['Industry']
 	]
@@ -33,6 +34,14 @@ def runModel(data, target):
 
 	#discretize our target, remove unneeded
 	targetData = [ex for ex in data if type(ex[target]) != str]
+	#temporary step: write out the data that can be found: 
+	with open('noQmarks.csv', 'w', newline = '') as csvfile:
+		fieldnames = [k for k in targetData[0].keys()]
+		writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+		writer.writeheader()
+		for ex in targetData:
+			writer.writerow(ex)
+
 	targetMedian = st.median([val[target] for val in targetData])
 
 	for ex in targetData:
@@ -44,7 +53,7 @@ def runModel(data, target):
 	continuous = ['Precipitation','Arable ', 'Crops ', 'Other ', 'Population', 'Area sq mi', 'Pop Density per sq mi','CoastlineLength'] 
 
 	results = []
-	for i in range(100):
+	for i in range(1):
 		model = ID3.ID3Augmented(attributes, target, continuous, targetData)
 		results.append(model.runTrial(1))
 
